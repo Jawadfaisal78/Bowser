@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Muhammad Ali — Professional IT Expert</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="logo.png" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #0b0f1a;
+      --bg-soft: #0f1424;
+      --card: #111735;
+      --accent: #6cf1ff;
+      --accent-2: #9b8cff;
+      --text: #e6e9ff;
+      --muted: #a8b0d9;
+      --primary: #00d4ff;
+      --success: #56f09f;
+      --danger: #ff6f6f;
+      --shadow: 0 20px 60px rgba(0,0,0,.45);
+      --radius: 16px;
+      --glass: rgba(255,255,255,0.06);
+      --glassBorder: 1px solid rgba(255,255,255,0.09);
+    }
+
+    *{box-sizing:border-box}
+    html,body{
+      margin:0; padding:0; background:var(--bg); color:var(--text);
+      font-family:Poppins, system-ui, -apple-system, Segoe UI, Roboto, "Noto Nastaliq Urdu", Arial, sans-serif;
+    }
+
+    /* Global layout */
+    .container{max-width:1200px; margin:0 auto; padding:0 24px}
+    a{color:var(--accent)}
+    img{max-width:100%; display:block}
+
+    /* Animated gradient background */
+    .gradient-bg{
+      position:fixed; inset:0; z-index:-2;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(108,241,255,.18), transparent 60%),
+                  radial-gradient(900px 500px at 90% 30%, rgba(155,140,255,.18), transparent 60%),
+                  radial-gradient(1000px 800px at 50% 80%, rgba(0,212,255,.10), transparent 60%),
+                  linear-gradient(160deg, #070a14, #0b0f1a 50%, #0f1424);
+      filter:saturate(1.1);
+    }
+    .particles{
+      position:fixed; inset:0; z-index:-1; pointer-events:none;
+    }
+    .particle{
+      position:absolute; width:8px; height:8px; border-radius:999px;
+      background:radial-gradient(circle, #ffffff 0%, #6cf1ff 60%, transparent 65%);
+      opacity:.18; animation:float 12s ease-in-out infinite;
+    }
+    @keyframes float{
+      0%,100%{transform:translateY(0) translateX(0) scale(1)}
+      50%{transform:translateY(-30px) translateX(10px) scale(1.2)}
+    }
+
+    /* Navigation */
+    header{
+      position:sticky; top:0; z-index:50; backdrop-filter:saturate(1.2) blur(10px);
+      background:linear-gradient(180deg, rgba(11,15,26,.65), rgba(11,15,26,.35));
+      border-bottom:var(--glassBorder);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between; gap:16px;
+      padding:14px 0;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px; text-decoration:none;
+    }
+    .brand img{width:34px; height:34px; border-radius:8px; box-shadow:0 6px 20px rgba(0,212,255,.25)}
+    .brand .title{font-weight:700; letter-spacing:.3px}
+    .brand .subtitle{font-size:12px; color:var(--muted)}
+    .nav-links{
+      display:flex; gap:18px; flex-wrap:wrap;
+    }
+    .nav-links a{
+      text-decoration:none; color:var(--text); padding:8px 12px; border-radius:10px;
+      transition:transform .2s ease, background .2s ease, color .2s ease;
+    }
+    .nav-links a:hover{
+      transform:translateY(-2px);
+      background:var(--glass); color:#fff;
+    }
+    .cta{
+      padding:10px 16px; border-radius:12px; font-weight:600; text-decoration:none;
+      background:linear-gradient(135deg, var(--primary), var(--accent-2));
+      color:#0b0f1a; box-shadow:0 10px 30px rgba(0,212,255,.35);
+      transition:transform .18s ease;
+    }
+    .cta:hover{transform:translateY(-2px) scale(1.02)}
+
+    /* Hero */
+    .hero{
+      position:relative; padding:80px 0 40px;
+    }
+    .hero-grid{
+      display:grid; grid-template-columns:1.15fr .85fr; gap:36px; align-items:center;
+    }
+    .badge{
+      display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px;
+      background:var(--glass); border:var(--glassBorder); color:var(--muted); font-size:13px;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
+    }
+    .badge i{width:8px; height:8px; border-radius:999px; background:var(--success); box-shadow:0 0 12px var(--success)}
+    .hero h1{
+      font-size:44px; line-height:1.14; margin:14px 0 10px; letter-spacing:.2px;
+    }
+    .typing{
+      color:var(--accent); border-right:2px solid var(--accent);
+      white-space:nowrap; overflow:hidden; display:inline-block;
+    }
+    .hero p{color:var(--muted); font-size:16px}
+    .hero-actions{display:flex; gap:14px; margin-top:18px; flex-wrap:wrap}
+    .btn{
+      padding:12px 16px; border-radius:12px; font-weight:600; text-decoration:none;
+      background:var(--glass); border:var(--glassBorder); color:#fff;
+      transition:transform .18s ease, background .18s ease;
+    }
+    .btn:hover{transform:translateY(-2px); background:rgba(255,255,255,.08)}
+    .btn.primary{
+      background:linear-gradient(135deg, var(--accent-2), var(--primary));
+      color:#0b0f1a; box-shadow:0 10px 30px rgba(155,140,255,.35);
+    }
+    .portrait-card{
+      position:relative; border-radius:20px; overflow:hidden; box-shadow:var(--shadow);
+      background:linear-gradient(180deg, #0d1230, #0a0e22);
+      border:var(--glassBorder);
+    }
+    .portrait-card .overlay{
+      position:absolute; inset:auto 0 0 0; height:50%;
+      background:linear-gradient(180deg, transparent, rgba(0,0,0,.5));
+    }
+    .portrait{
+      width:100%; height:100%; object-fit:cover; aspect-ratio: 4 / 5;
+      transform:scale(1.02); filter:saturate(1.05) contrast(1.02);
+      animation:portraitFloat 14s ease-in-out infinite;
+    }
+    @keyframes portraitFloat{
+      0%,100%{transform:scale(1.02) translateY(0)}
+      50%{transform:scale(1.05) translateY(-6px)}
+    }
+    .glow-ring{
+      position:absolute; inset:-20% -20% auto auto; width:240px; height:240px; border-radius:999px;
+      background:radial-gradient(circle, rgba(108,241,255,.35) 0%, transparent 60%);
+      filter:blur(18px);
+      animation:spin 24s linear infinite;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* Documentary section */
+    section{padding:60px 0}
+    .section-header{
+      display:flex; align-items:end; justify-content:space-between; gap:16px; margin-bottom:24px;
+      border-bottom:var(--glassBorder); padding-bottom:10px;
+    }
+    .section-header h2{margin:0; font-size:28px}
+    .section-header p{margin:0; color:var(--muted)}
+    .doc-grid{
+      display:grid; grid-template-columns:1fr 1fr; gap:24px;
+    }
+    .doc-card{
+      background:var(--glass); border:var(--glassBorder); border-radius:18px; padding:18px;
+      box-shadow:var(--shadow);
+      transform:translateY(6px); opacity:0; transition:transform .6s ease, opacity .6s ease;
+    }
+    .doc-card.visible{transform:translateY(0); opacity:1}
+    .doc-card h3{margin:0 0 8px 0; font-size:20px}
+    .doc-card p{color:var(--muted); margin:0}
+    .timeline{
+      position:relative; padding-left:22px;
+    }
+    .timeline::before{
+      content:""; position:absolute; left:8px; top:4px; bottom:4px; width:2px; background:linear-gradient(#6cf1ff, #9b8cff);
+      border-radius:999px;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:999px; background:var(--primary);
+      box-shadow:0 0 14px rgba(0,212,255,.6);
+      position:absolute; left:4px; transform:translateY(2px);
+    }
+    .timeline-item{position:relative; padding:10px 0 10px 12px}
+    .timeline-item .dot{top:18px}
+
+    /* Skills */
+    .skills{
+      display:grid; grid-template-columns:repeat(3, 1fr); gap:16px;
+    }
+    .skill{
+      background:var(--glass); border:var(--glassBorder); border-radius:16px; padding:14px;
+      display:flex; align-items:center; gap:12px;
+      transform:translateY(8px); opacity:0; transition:transform .6s ease, opacity .6s ease;
+    }
+    .skill.visible{transform:translateY(0); opacity:1}
+    .meter{
+      flex:1; height:8px; border-radius:999px; background:rgba(255,255,255,.08); overflow:hidden;
+    }
+    .meter span{
+      display:block; height:100%; border-radius:999px;
+      background:linear-gradient(90deg, var(--primary), var(--accent-2));
+      width:0%;
+      box-shadow:0 0 16px rgba(0,212,255,.35);
+      transition:width 1.2s ease;
+    }
+
+    /* Gallery */
+    .gallery{
+      display:grid; grid-template-columns:repeat(3, 1fr); gap:16px;
+    }
+    .gal-item{
+      position:relative; border-radius:16px; overflow:hidden;
+      background:#0c1230; border:var(--glassBorder);
+      transform:scale(.96); opacity:0; transition:transform .6s ease, opacity .6s ease;
+    }
+    .gal-item.visible{transform:scale(1); opacity:1}
+    .gal-item img{width:100%; height:220px; object-fit:cover}
+    .gal-item .caption{
+      position:absolute; inset:auto 10px 10px 10px; background:rgba(0,0,0,.45);
+      color:#fff; padding:8px 10px; border-radius:10px; font-size:13px;
+      backdrop-filter:blur(6px);
+    }
+
+    /* Footer */
+    footer{
+      margin-top:40px; padding:28px 0;
+      border-top:var(--glassBorder);
+      background:linear-gradient(180deg, rgba(15,20,36,.35), rgba(15,20,36,.15));
+    }
+    .foot{
+      display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+    }
+    .foot small{color:var(--muted)}
+    .social{display:flex; gap:10px}
+    .social a{
+      width:36px; height:36px; display:flex; align-items:center; justify-content:center;
+      border-radius:10px; background:var(--glass); border:var(--glassBorder);
+      color:#fff; text-decoration:none; transition:transform .18s ease, background .18s ease;
+    }
+    .social a:hover{transform:translateY(-2px); background:rgba(255,255,255,.08)}
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-grid{grid-template-columns:1fr; gap:24px}
+      .doc-grid{grid-template-columns:1fr}
+      .skills{grid-template-columns:1fr 1fr}
+      .gallery{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width: 640px){
+      .skills{grid-template-columns:1fr}
+      .gallery{grid-template-columns:1fr}
+      .hero h1{font-size:34px}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Animated background -->
+  <div class="gradient-bg"></div>
+  <div class="particles" id="particles"></div>
+
+  <!-- Header / Navigation -->
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="Muhammad Ali Home">
+        <img src="logo.png" alt="Logo" />
+        <div>
+          <div class="title">Muhammad Ali</div>
+          <div class="subtitle">Professional IT Expert</div>
+        </div>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#home">Home</a>
+        <a href="#documentary">Documentary</a>
+        <a href="#skills">Skills</a>
+        <a href="#gallery">Gallery</a>
+        <a class="cta" href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="home" class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="badge"><i></i> Verified • Cutting-edge IT Solutions</span>
+        <h1>
+          Muhammad Ali — <span class="typing" id="typing"></span>
+        </h1>
+        <p>
+          Muhammad Ali ek Professional IT Expert hai jo enterprise-grade systems, secure cloud architectures,
+          aur high-performance web applications design karta hai. Us ka focus scalability, security aur delightful
+          user experience par hota hai — taake har solution real-world impact create kare.
+        </p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#documentary">Watch Documentary</a>
+          <a class="btn" href="#skills">Explore Skills</a>
+          <a class="btn" href="#contact">Work with Ali</a>
+        </div>
+      </div>
+      <div class="portrait-card">
+        <div class="glow-ring"></div>
+        <!-- Replace the src below with your actual image file of Muhammad Ali -->
+        <img class="portrait" src="muhammad-ali.jpg" alt="Muhammad Ali portrait" />
+        <div class="overlay"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Documentary -->
+  <section id="documentary">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2>Documentary — The Craft of a Professional IT Expert</h2>
+          <p>Journey, mindset, aur wo decisions jo excellence ko habit bana dete hain.</p>
+        </div>
+        <div class="badge"><i></i> Runtime ~ 3 min read</div>
+      </div>
+
+      <div class="doc-grid">
+        <article class="doc-card">
+          <h3>Origins: Curiosity to Capability</h3>
+          <p>
+            Har kahani curiosity se start hoti hai. Ali ne apni journey simple scripts se shuru ki —
+            system ko samajhna, bottlenecks ko dhoondhna, aur phir unhe solve karna.
+            Ye discipline usay engineering ke asli art tak le gaya: problems ko elegantly solve karna.
+          </p>
+        </article>
+
+        <article class="doc-card">
+          <h3>Systems Thinking: Beyond the Code</h3>
+          <p>
+            Professional IT sirf code nahi — ecosystems hain. Ali cloud-native design, CI/CD pipelines,
+            observability, aur zero-trust security practices ko integrate karta hai taake solutions
+            resilient, maintainable, aur future-ready hon.
+          </p>
+        </article>
+
+        <article class="doc-card timeline">
+          <div class="timeline-item">
+            <span class="dot"></span>
+            <h3>Phase 1 — Foundation</h3>
+            <p>
+              Networking basics, Linux internals, aur data structures. Yahan fundamentals itne strong
+              bane ke complexity kabhi barrier nahi rahi.
+            </p>
+          </div>
+          <div class="timeline-item">
+            <span class="dot"></span>
+            <h3>Phase 2 — Building</h3>
+            <p>
+              RESTful APIs, microservices, aur containerization. Performance profiling aur caching se
+              latency ko millisecond level par control kiya.
+            </p>
+          </div>
+          <div class="timeline-item">
+            <span class="dot"></span>
+            <h3>Phase 3 — Impact</h3>
+            <p>
+              Enterprise deployments, SRE practices, aur business alignment. Yahan technology sirf tool
+              nahi, strategic advantage ban gayi.
+            </p>
+          </div>
+        </article>
+
+        <article class="doc-card">
+          <h3>Principles: What Never Compromises</h3>
+          <p>
+            Security-first mindset, test coverage as culture, documentation as a product, aur accessibility
+            as a baseline. Ye values har deliverable me nazar aati hain — aur isi se trust build hota hai.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2>Core Skills & Expertise</h2>
+          <p>Performance, security, scalability — measurable outcomes pe focus.</p>
+        </div>
+        <div class="badge"><i></i> Continuously improving</div>
+      </div>
+
+      <div class="skills">
+        <div class="skill">
+          <strong>Cloud & DevOps</strong>
+          <div class="meter"><span style="--target:92%"></span></div>
+        </div>
+        <div class="skill">
+          <strong>Backend Engineering</strong>
+          <div class="meter"><span style="--target:90%"></span></div>
+        </div>
+        <div class="skill">
+          <strong>Frontend & UX</strong>
+          <div class="meter"><span style="--target:86%"></span></div>
+        </div>
+        <div class="skill">
+          <strong>Security & Compliance</strong>
+          <div class="meter"><span style="--target:88%"></span></div>
+        </div>
+        <div class="skill">
+          <strong>Data & Observability</strong>
+          <div class="meter"><span style="--target:84%"></span></div>
+        </div>
+        <div class="skill">
+          <strong>Automation & SRE</strong>
+          <div class="meter"><span style="--target:89%"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2>Project Gallery</h2>
+          <p>Selected highlights — secure, scalable, and delightful.</p>
+        </div>
+        <div class="badge"><i></i> Live previews</div>
+      </div>
+
+      <div class="gallery">
+        <div class="gal-item">
+          <img src="project-1.jpg" alt="Cloud-native API platform" />
+          <div class="caption">Cloud-native API platform — 99.95% uptime</div>
+        </div>
+        <div class="gal-item">
+          <img src="project-2.jpg" alt="Realtime analytics dashboard" />
+          <div class="caption">Realtime analytics — sub-second insights</div>
+        </div>
+        <div class="gal-item">
+          <img src="project-3.jpg" alt="Secure e-commerce stack" />
+          <div class="caption">Secure e-commerce — PCI-aligned design</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2>Contact & Collaboration</h2>
+          <p>Let’s architect something meaningful together.</p>
+        </div>
+        <div class="badge"><i></i> Response within 24h</div>
+      </div>
+
+      <div class="doc-card" style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+        <form id="contactForm">
+          <div style="display:grid; gap:10px;">
+            <label>
+              <span style="display:block; color:var(--muted); margin-bottom:6px;">Your Name</span>
+              <input type="text" name="name" required
+                style="width:100%; padding:10px 12px; border-radius:10px; border:var(--glassBorder); background:var(--glass); color:#fff;">
+            </label>
+            <label>
+              <span style="display:block; color:var(--muted); margin-bottom:6px;">Email</span>
+              <input type="email" name="email" required
+                style="width:100%; padding:10px 12px; border-radius:10px; border:var(--glassBorder); background:var(--glass); color:#fff;">
+            </label>
+            <label>
+              <span style="display:block; color:var(--muted); margin-bottom:6px;">Message</span>
+              <textarea name="message" rows="4" required
+                style="width:100%; padding:10px 12px; border-radius:10px; border:var(--glassBorder); background:var(--glass); color:#fff;"></textarea>
+            </label>
+            <button class="btn primary" type="submit">Send message</button>
+          </div>
+        </form>
+
+        <div>
+          <h3 style="margin-top:0;">Working style</h3>
+          <p style="color:var(--muted);">
+            Discovery → Architecture → Iteration → Launch. Transparent communication, measurable milestones,
+            aur continuous improvement. Security and performance are non-negotiable.
+          </p>
+          <div style="display:flex; gap:10px; margin-top:10px;">
+            <a class="btn" href="#documentary">Read more</a>
+            <a class="btn" href="#skills">Capabilities</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container foot">
+      <small>© <span id="year"></span> Muhammad Ali — Professional IT Expert</small>
+      <div class="social">
+        <a href="#" aria-label="LinkedIn">in</a>
+        <a href="#" aria-label="GitHub">gh</a>
+        <a href="#" aria-label="X">x</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Particles
+    (function makeParticles(){
+      const wrap = document.getElementById('particles');
+      const count = Math.min(60, Math.max(30, Math.floor(window.innerWidth/30)));
+      for(let i=0;i<count;i++){
+        const p = document.createElement('div');
+        p.className = 'particle';
+        const x = Math.random()*100, y = Math.random()*100;
+        const delay = (Math.random()*6).toFixed(2);
+        const size = 4 + Math.random()*8;
+        p.style.left = x + '%';
+        p.style.top = y + '%';
+        p.style.width = size + 'px';
+        p.style.height = size + 'px';
+        p.style.animationDelay = delay + 's';
+        wrap.appendChild(p);
+      }
+    })();
+
+    // Typing effect
+    (function typing(){
+      const el = document.getElementById('typing');
+      const phrases = [
+        'Professional IT Expert',
+        'Cloud-Native Architect',
+        'Secure Systems Designer',
+        'Performance Optimizer'
+      ];
+      let pi = 0, ci = 0, del = false;
+      const speed = 60, pause = 1200;
+
+      function tick(){
+        const text = phrases[pi];
+        if(!del){
+          el.textContent = text.slice(0, ++ci);
+          if(ci === text.length){ del = true; setTimeout(tick, pause); return; }
+          setTimeout(tick, speed);
+        }else{
+          el.textContent = text.slice(0, --ci);
+          if(ci === 0){ del = false; pi = (pi+1) % phrases.length; }
+          setTimeout(tick, speed * 0.6);
+        }
+      }
+      tick();
+    })();
+
+    // Intersection animations for cards, skills, gallery
+    const onShow = (selector, cb) => {
+      const items = document.querySelectorAll(selector);
+      const io = new IntersectionObserver(entries=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){
+            e.target.classList.add('visible');
+            if(cb) cb(e.target);
+            io.unobserve(e.target);
+          }
+        });
+      }, {threshold: 0.2});
+      items.forEach(i=>io.observe(i));
+    };
+
+    onShow('.doc-card');
+    onShow('.skill', el=>{
+      const span = el.querySelector('.meter span');
+      const target = span.style.getPropertyValue('--target') || '80%';
+      requestAnimationFrame(()=> span.style.width = target);
+    });
+    onShow('.gal-item');
+
+    // Contact form (demo only)
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', e=>{
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+      alert(`Thanks, ${data.name}! Your message was received.`);
+      form.reset();
+    });
+
+    // Parallax on hero portrait
+    (function parallax(){
+      const card = document.querySelector('.portrait-card');
+      if(!card) return;
+      let rafId = null;
+      card.addEventListener('mousemove', (e)=>{
+        const r = card.getBoundingClientRect();
+        const x = ((e.clientX - r.left)/r.width - .5) * 10;
+        const y = ((e.clientY - r.top)/r.height - .5) * 10;
+        cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(()=>{
+          card.style.transform = `perspective(800px) rotateY(${x/2}deg) rotateX(${ -y/2 }deg)`;
+        });
+      });
+      card.addEventListener('mouseleave', ()=>{
+        card.style.transform = 'none';
+      });
+    })();
+  </script>
+</body>
+</html>
